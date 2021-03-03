@@ -9,10 +9,11 @@ class TestPub(unittest.TestCase):
     def setUp(self):
         self.drink1 = Drink("Bramble", 5, 2, 20)
         self.drink2 = Drink("Long Vodka", 10, 3, 10)
+        self.drink3 = Drink("Martini", 5, 3, 0)
         self.food1 = Food("Burger", 20, -4, 10)
         self.food2 = Food("Pizza", 10, -6, 30)
 
-        drinks = [self.drink1, self.drink2]
+        drinks = [self.drink1, self.drink2, self.drink3]
         food = [self.food1, self.food2]
         self.pub = Pub("The Vaccine Arms", 1500.00, drinks, food)
 
@@ -58,6 +59,10 @@ class TestPub(unittest.TestCase):
         customer = Customer("Bob", 100.00, 25, 10)
         self.pub.sell_food(customer, "Pizza")
         self.assertEqual(4, customer.drunk_level)
+
+    def test_sell_drink_to_customer_drink_found_no_stock(self):
+        customer = Customer("Bob", 18, 25)
+        self.assertEqual("no stock", self.pub.sell_drink(customer, "Martini"))
     
     def test_stock_value(self):
         self.assertEqual(700, self.pub.check_stock_total_value())
@@ -68,4 +73,3 @@ class TestPub(unittest.TestCase):
     def test_decrease_stock(self):
         self.pub.change_stock_amount("food", "Pizza", -3)
         self.assertEqual(27, self.pub.stock["food"][1].stock)
-

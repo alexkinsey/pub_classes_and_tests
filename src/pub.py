@@ -26,6 +26,8 @@ class Pub:
         drink = self.find_drink_by_name(drink_name)
         if customer.age < 18 or customer.drunk_level > 10 or not drink or customer.wallet < drink.price:
             return "could not sell drink"
+        if self.check_stock_amount("drinks", drink.name) < 1:
+            return "no stock"
 
         customer.reduce_wallet(drink.price)
         customer.increase_or_decrease_drunk_level(drink.alcohol_level)
