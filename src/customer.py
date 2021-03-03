@@ -10,3 +10,6 @@ class Customer:
 
     def increase_or_decrease_drunk_level(self, amount):
         self.drunk_level += amount
+
+        if self.drunk_level < 0:
+            self.drunk_level = 0

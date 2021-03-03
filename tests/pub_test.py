@@ -64,9 +64,6 @@ class TestPub(unittest.TestCase):
         customer = Customer("Bob", 100.00, 25, 10)
         self.pub.sell_food(customer, "Pizza")
         self.assertEqual(4, customer.drunk_level)
-
-    def test_access_dict(self):
-        item = self.pub.stock["drinks"][1]
     
     def test_stock_value(self):
         self.assertEqual(700, self.pub.check_stock_value())
