@@ -35,6 +35,7 @@ class TestPub(unittest.TestCase):
         self.pub.sell_drink(customer, "Bramble")
         self.assertEqual(1505.00, self.pub.till)
         self.assertEqual(95.00, customer.wallet)
+        self.assertEqual(19, self.pub.stock["drinks"][0].stock)
 
     def test_sell_drink_to_customer_drink__not_exist(self):
         customer = Customer("Bob", 100.00, 25)
@@ -59,4 +60,12 @@ class TestPub(unittest.TestCase):
         self.assertEqual(4, customer.drunk_level)
     
     def test_stock_value(self):
-        self.assertEqual(700, self.pub.check_stock_value())
+        self.assertEqual(700, self.pub.check_stock_total_value())
+
+    def test_check_stock_amount(self):
+        self.assertEqual(20, self.pub.check_stock_amount("drinks", "Bramble"))
+
+    def test_decrease_stock(self):
+        self.pub.change_stock_amount("food", "Pizza", -3)
+        self.assertEqual(27, self.pub.stock["food"][1].stock)
+
