@@ -78,3 +78,5 @@ class TestPub(unittest.TestCase):
         customer = Customer("Zac", 100.00, 25)
         self.pub.sell_item(customer, "drinks", "Bramble", 10)
         self.assertEqual(1550, self.pub.till)
+        self.assertEqual(50, customer.wallet)
+        self.assertEqual(10, self.pub.check_stock_amount("drinks", "Bramble"))
