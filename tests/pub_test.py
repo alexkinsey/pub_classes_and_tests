@@ -31,34 +31,27 @@ class TestPub(unittest.TestCase):
         self.assertEqual("Long Vodka", find_drink.name)
 
     def test_sell_drink_to_customer(self):
-        customer = Customer("Bob", 100.00, 25, 5)
+        customer = Customer("Bob", 100.00, 25)
         self.pub.sell_drink(customer, "Bramble")
         self.assertEqual(1505.00, self.pub.till)
         self.assertEqual(95.00, customer.wallet)
 
-    def test_sell_drink_to_customer_drink_not(self):
+    def test_sell_drink_to_customer_drink__not_exist(self):
         customer = Customer("Bob", 100.00, 25)
-        self.pub.sell_drink(customer, "Beer")
-        self.assertEqual(1500.00, self.pub.till)
-        self.assertEqual(100.00, customer.wallet)
+        self.assertEqual("could not sell drink", self.pub.sell_drink(customer, "Beer"))
 
     def test_sell_drink_to_customer_drink_found_no_funds(self):
         customer = Customer("Bob", 3.00, 25)
-        self.pub.sell_drink(customer, "Bramble")
-        self.assertEqual(1500.00, self.pub.till)
-        self.assertEqual(3.00, customer.wallet)
+        self.assertEqual("could not sell drink", self.pub.sell_drink(customer, "Bramble"))
 
     def test_sell_drink_to_customer_underage(self):
-        customer = Customer("Bob", 100.00,8)
-        self.pub.sell_drink(customer, "Bramble")
-        self.assertEqual(1500.00, self.pub.till)
-        self.assertEqual(100.00, customer.wallet)
+        customer = Customer("Bob", 100.00, 8)
+        self.assertEqual("could not sell drink", self.pub.sell_drink(customer, "Bramble"))
     
     def test_sell_drink_to_customer_drunk(self):
-        customer = Customer("Bob", 100.00, 25, 15)
+        customer = Customer("Bob", 100.00, 25, 9)
         self.pub.sell_drink(customer, "Bramble")
-        self.assertEqual(1500.00, self.pub.till)
-        self.assertEqual(100.00, customer.wallet)
+        self.assertEqual("could not sell drink", self.pub.sell_drink(customer, "Bramble"))
 
     def test_sell_food_to_customer_decrease_drunk_level(self):
         customer = Customer("Bob", 100.00, 25, 10)
